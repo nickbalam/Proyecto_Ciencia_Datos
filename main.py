@@ -9,22 +9,27 @@ df = None
 ventana = tk.Tk()
 ventana.title("Proyecto Ciencia de Datos")
 ventana.geometry("800x600")
+ventana.config(bg="#dbeafe")
 
 titulo = tk.Label(
     ventana,
-    text="Proyecto Ciencia de Datos",
-    font=("Arial", 20)
+    text="Sistema de Análisis Socioeconómico",
+    font=("Arial", 24, "bold"),
+    bg="#dbeafe",
+    fg="#1e3a8a"
 )
+
 titulo.pack(pady=20)
 
 label_region = tk.Label(
     ventana,
-    text="Selecciona una región:"
+    text="Selecciona una región:",
+    font=("Arial", 12, "bold"),
+    bg="#dbeafe"
 )
 
 label_region.pack()
 
-# ComboBox
 combo_region = ttk.Combobox(
     ventana,
     state="readonly",
@@ -180,52 +185,79 @@ def salir():
         ventana.destroy()
 
 
-btn_csv=tk.Button(
+btn_csv = tk.Button(
     ventana,
     text="Cargar CSV",
-    width=20,
+    width=25,
+    height=2,
+    bg="#2563eb",
+    fg="white",
+    font=("Arial", 11, "bold"),
     command=cargar_csv
 )
+
 btn_csv.pack(pady=10)
 
 btn_grafica = tk.Button(
     ventana,
     text="Generar gráfica",
-    width=20,
+    width=25,
+    height=2,
+    bg="#16a34a",
+    fg="white",
+    font=("Arial", 11, "bold"),
     command=generar_grafica
 )
+
+btn_grafica.pack(pady=10)
 
 btn_circular = tk.Button(
     ventana,
     text="Gráfica circular",
-    width=20,
+    width=25,
+    height=2,
+    bg="#9333ea",
+    fg="white",
+    font=("Arial", 11, "bold"),
     command=grafica_circular
 )
 
 btn_circular.pack(pady=10)
-btn_grafica.pack(pady=10)
 
 btn_excel = tk.Button(
     ventana,
     text="Exportar Excel",
-    width=20,
+    width=25,
+    height=2,
+    bg="#ea580c",
+    fg="white",
+    font=("Arial", 11, "bold"),
     command=exportar_excel
 )
+
 btn_excel.pack(pady=10)
 
 btn_acerca = tk.Button(
     ventana,
     text="Acerca de",
-    width=20,
+    width=25,
+    height=2,
+    bg="#0f172a",
+    fg="white",
+    font=("Arial", 11, "bold"),
     command=acerca_de
 )
-btn_acerca.pack(pady=10)
 
 btn_salir = tk.Button(
     ventana,
     text="Salir",
-    width=20,
+    width=25,
+    height=2,
+    bg="#dc2626",
+    fg="white",
+    font=("Arial", 11, "bold"),
     command=salir
 )
+
 btn_salir.pack(pady=10)
 ventana.mainloop()
