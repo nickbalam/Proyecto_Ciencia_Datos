@@ -1,6 +1,7 @@
-import pandas as pd
 import tkinter as tk
 from tkinter import messagebox
+import pandas as pd
+import matplotlib.pyplot as plt
 
 ventana = tk.Tk()
 ventana.title("Proyecto Ciencia de Datos")
@@ -35,7 +36,29 @@ def cargar_csv():
             f"No se pudo cargar el archivo\n\n{e}"
         )
 def generar_grafica():
-    messagebox.showinfo("Gráfica", "Aquí se carga la gráfica")
+
+    try:
+        # Contar registros por columna
+        conteo = df.iloc[:, 0].value_counts().head(10)
+
+        # Crear gráfica
+        plt.figure(figsize=(10,5))
+
+        conteo.plot(kind='bar')
+
+        plt.title("Top 10 registros")
+        plt.xlabel("Categorías")
+        plt.ylabel("Cantidad")
+
+        plt.tight_layout()
+
+        plt.show()
+
+    except Exception as e:
+        messagebox.showerror(
+            "Error",
+            f"No se pudo generar la gráfica\n\n{e}"
+        )
 
 def exportar_excel():
     messagebox.showinfo("Excel", "Aquí se exportará el reporte")
