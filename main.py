@@ -1,7 +1,10 @@
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import ttk
 import pandas as pd
 import matplotlib.pyplot as plt
+
+df = None
 
 ventana = tk.Tk()
 ventana.title("Proyecto Ciencia de Datos")
@@ -14,11 +17,33 @@ titulo = tk.Label(
 )
 titulo.pack(pady=20)
 
+label_region = tk.Label(
+    ventana,
+    text="Selecciona una región:"
+)
+
+label_region.pack()
+
+# ComboBox
+combo_region = ttk.Combobox(
+    ventana,
+    state="readonly",
+    width=30
+)
+
+combo_region.pack(pady=10)
+
 def cargar_csv():
     global df
 
     try:
         df = pd.read_csv("datos.csv")
+
+        regiones = sorted(
+            df["region"].unique()
+        )
+
+        combo_region["values"] = regiones
 
         filas = len(df)
         columnas = len(df.columns)
@@ -31,35 +56,50 @@ def cargar_csv():
         )
 
     except Exception as e:
+
         messagebox.showerror(
             "Error",
             f"No se pudo cargar el archivo\n\n{e}"
         )
+
 def generar_grafica():
 
     try:
-        # Contar registros por columna
-        conteo = df.iloc[:, 0].value_counts().head(10)
 
-        # Crear gráfica
+        region = combo_region.get()
+
+        # Filtrar región
+        datos_filtrados = df[
+            df["region"] == region
+        ]
+
+        top_paises = datos_filtrados.groupby(
+            "country"
+        )["gdp_per_capita_usd"].mean().sort_values(
+            ascending=False
+        ).head(10)
+
         plt.figure(figsize=(10,5))
 
-        conteo.plot(kind='bar')
+        top_paises.plot(kind="bar")
 
-        plt.title("Top 10 registros")
-        plt.xlabel("Categorías")
-        plt.ylabel("Cantidad")
+        plt.title(
+            f"Top 10 PIB per cápita - {region}"
+        )
+
+        plt.xlabel("País")
+        plt.ylabel("PIB per cápita USD")
 
         plt.tight_layout()
 
         plt.show()
 
     except Exception as e:
+
         messagebox.showerror(
             "Error",
             f"No se pudo generar la gráfica\n\n{e}"
         )
-
 def grafica_circular():
 
     try:
@@ -105,7 +145,7 @@ def exportar_excel():
             "Error",
             f"No se pudo exportar el archivo\n\n{e}"
         )
-        
+
 def acerca_de():
     messagebox.showinfo(
         "Acerca de",
