@@ -60,6 +60,31 @@ def generar_grafica():
             f"No se pudo generar la gráfica\n\n{e}"
         )
 
+def grafica_circular():
+
+    try:
+        # Contar categorías
+        conteo = df.iloc[:, 0].value_counts().head(5)
+
+        # Crear gráfica circular
+        plt.figure(figsize=(7,7))
+
+        plt.pie(
+            conteo,
+            labels=conteo.index,
+            autopct='%1.1f%%'
+        )
+
+        plt.title("Distribución de categorías")
+
+        plt.show()
+
+    except Exception as e:
+        messagebox.showerror(
+            "Error",
+            f"No se pudo generar la gráfica circular\n\n{e}"
+        )
+
 def exportar_excel():
     messagebox.showinfo("Excel", "Aquí se exportará el reporte")
 
@@ -92,6 +117,15 @@ btn_grafica = tk.Button(
     width=20,
     command=generar_grafica
 )
+
+btn_circular = tk.Button(
+    ventana,
+    text="Gráfica circular",
+    width=20,
+    command=grafica_circular
+)
+
+btn_circular.pack(pady=10)
 btn_grafica.pack(pady=10)
 
 btn_excel = tk.Button(
