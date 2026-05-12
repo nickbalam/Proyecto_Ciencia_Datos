@@ -3,11 +3,45 @@ from tkinter import messagebox
 from tkinter import ttk
 import pandas as pd
 import matplotlib.pyplot as plt
+import time
 
 df = None
 
+splash = tk.Tk()
+
+splash.title("Bienvenido")
+splash.geometry("500x300")
+splash.config(bg="#1e3a8a")
+
+mensaje = tk.Label(
+    splash,
+    text="Sistema de Análisis Socioeconómico",
+    font=("Arial", 20, "bold"),
+    fg="white",
+    bg="#1e3a8a"
+)
+
+mensaje.pack(expand=True)
+
+submensaje = tk.Label(
+    splash,
+    text="Cargando aplicación...",
+    font=("Arial", 12),
+    fg="white",
+    bg="#1e3a8a"
+)
+
+submensaje.pack(pady=20)
+
+splash.update()
+
+time.sleep(3)
+
+splash.destroy()
+
 ventana = tk.Tk()
-ventana.title("Proyecto Ciencia de Datos")
+
+ventana.title("Sistema de Análisis Socioeconómico")
 ventana.geometry("800x600")
 ventana.config(bg="#dbeafe")
 
@@ -171,10 +205,18 @@ def exportar_excel():
         )
 
 def acerca_de():
+
     messagebox.showinfo(
         "Acerca de",
-        "Proyecto realizado por Victoria Balam"
+        "Sistema de Análisis Socioeconómico\n\n"
+        "Desarrollado por: Victoria Balam\n\n"
+        "Librerías utilizadas:\n"
+        "- tkinter\n"
+        "- pandas\n"
+        "- matplotlib\n"
+        "- openpyxl"
     )
+
 
 def salir():
     respuesta = messagebox.askyesmo(
@@ -183,7 +225,6 @@ def salir():
     )
     if respuesta:
         ventana.destroy()
-
 
 btn_csv = tk.Button(
     ventana,
