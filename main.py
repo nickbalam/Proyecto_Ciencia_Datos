@@ -1,3 +1,4 @@
+import pandas as pd
 import tkinter as tk
 from tkinter import messagebox
 
@@ -13,8 +14,26 @@ titulo = tk.Label(
 titulo.pack(pady=20)
 
 def cargar_csv():
-    messagebox.showinfo("Cargar","Aquí carga el csv")
+    global df
 
+    try:
+        df = pd.read_csv("datos.csv")
+
+        filas = len(df)
+        columnas = len(df.columns)
+
+        messagebox.showinfo(
+            "CSV cargado",
+            f"Archivo cargado correctamente\n\n"
+            f"Filas: {filas}\n"
+            f"Columnas: {columnas}"
+        )
+
+    except Exception as e:
+        messagebox.showerror(
+            "Error",
+            f"No se pudo cargar el archivo\n\n{e}"
+        )
 def generar_grafica():
     messagebox.showinfo("Gráfica", "Aquí se carga la gráfica")
 
