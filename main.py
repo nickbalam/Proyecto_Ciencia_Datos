@@ -100,50 +100,69 @@ def generar_grafica():
             "Error",
             f"No se pudo generar la gráfica\n\n{e}"
         )
+
 def grafica_circular():
 
     try:
-        # Contar categorías
-        conteo = df.iloc[:, 0].value_counts().head(5)
 
-        # Crear gráfica circular
+        region = combo_region.get()
+
+        datos_filtrados = df[
+            df["region"] == region
+        ]
+
+        top_internet = datos_filtrados.groupby(
+            "country"
+        )["internet_penetration_pct"].mean().sort_values(
+            ascending=False
+        ).head(5)
+
         plt.figure(figsize=(7,7))
 
         plt.pie(
-            conteo,
-            labels=conteo.index,
+            top_internet,
+            labels=top_internet.index,
             autopct='%1.1f%%'
         )
 
-        plt.title("Distribución de categorías")
+        plt.title(
+            f"Top 5 acceso a internet - {region}"
+        )
 
         plt.show()
 
     except Exception as e:
+
         messagebox.showerror(
             "Error",
-            f"No se pudo generar la gráfica circular\n\n{e}"
+            f"No se pudo generar la gráfica\n\n{e}"
         )
 
 def exportar_excel():
 
     try:
-        # Exportar dataframe
-        df.to_excel(
-            "reporte.xlsx",
+
+        region = combo_region.get()
+
+        datos_filtrados = df[
+            df["region"] == region
+        ]
+
+        datos_filtrados.to_excel(
+            "reporte_filtrado.xlsx",
             index=False
         )
 
         messagebox.showinfo(
             "Exportación exitosa",
-            "El reporte se exportó correctamente"
+            "Reporte exportado correctamente"
         )
 
     except Exception as e:
 
         messagebox.showerror(
             "Error",
-            f"No se pudo exportar el archivo\n\n{e}"
+            f"No se pudo exportar\n\n{e}"
         )
 
 def acerca_de():
