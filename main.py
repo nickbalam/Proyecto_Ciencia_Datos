@@ -86,8 +86,26 @@ def grafica_circular():
         )
 
 def exportar_excel():
-    messagebox.showinfo("Excel", "Aquí se exportará el reporte")
 
+    try:
+        # Exportar dataframe
+        df.to_excel(
+            "reporte.xlsx",
+            index=False
+        )
+
+        messagebox.showinfo(
+            "Exportación exitosa",
+            "El reporte se exportó correctamente"
+        )
+
+    except Exception as e:
+
+        messagebox.showerror(
+            "Error",
+            f"No se pudo exportar el archivo\n\n{e}"
+        )
+        
 def acerca_de():
     messagebox.showinfo(
         "Acerca de",
